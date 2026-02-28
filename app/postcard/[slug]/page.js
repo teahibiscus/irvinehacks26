@@ -45,8 +45,8 @@ export default async function ViewPostcard({ params }) {
         <div
           style={{
             position: "relative",
-            width: "100%",
-            height: "300px",
+            width: "300px",
+            height: "500px",
             overflow: "hidden",
             borderRadius: "8px",
           }}
@@ -64,7 +64,7 @@ export default async function ViewPostcard({ params }) {
         </p>
 
         {/* Music Link Section */}
-        {/* {postcard.song_link && (
+        {postcard.song_link && (
           <div
             style={{
               marginTop: "1.5rem",
@@ -82,7 +82,7 @@ export default async function ViewPostcard({ params }) {
               Open Song Link
             </a>
           </div>
-        )} */}
+        )}
       </div>
     </main>
   );
