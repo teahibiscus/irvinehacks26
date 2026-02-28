@@ -43,3 +43,31 @@ export async function createPostcard(formData) {
   // 4. Redirect to the newly created postcard page
   redirect(`/postcard/${data.slug}`);
 }
+
+export async function getSpotifyToken() {
+  const auth = Buffer.from(
+    `${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`,
+  ).toString("base64");
+
+  try {
+    const response = await fetch("https://accounts.spotify.com/api/token", {
+      method: "POST",
+      headers: {
+        Authorization: `Basic ${auth}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({
+        grant_type: "client_credentials",
+      }),
+      // This tells Next.js to cache this token for 50 mins (3000s)
+      // so you don't hit Spotify's rate limit!
+      next: { revalidate: 3000 },
+    });
+
+    const data = await response.json();
+    return data.access_token;
+  } catch (error) {
+    console.error("Spotify Auth Error:", error);
+    return null;
+  }
+}

@@ -1,6 +1,8 @@
 import { supabase } from "@/lib/supabase";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+// import { useEffect, useState } from "react";
+// import { getSpotifyToken } from "../actions";
 
 export default async function ViewPostcard({ params }) {
   // 1. Get the slug from the URL parameters
@@ -18,6 +20,37 @@ export default async function ViewPostcard({ params }) {
   if (error || !postcard) {
     notFound();
   }
+
+  // const [audio, setAudio] = useState(null);
+
+  // useEffect(() => {
+  //   async function setupAudio() {
+  //     // 1. Call the Server Action directly!
+  //     const token = await getSpotifyToken();
+  //     if (!token) return;
+
+  //     // 2. Extract the ID from the URL
+  //     const trackId = postcard.song.split("/track/")[1]?.split("?")[0];
+
+  //     // 3. Get the track metadata
+  //     const res = await fetch(`https://api.spotify.com/v1/tracks/${trackId}`, {
+  //       headers: { Authorization: `Bearer ${token}` },
+  //     });
+  //     const trackData = await res.json();
+
+  //     if (trackData.preview_url) {
+  //       setAudio(new Audio(trackData.preview_url));
+  //     }
+  //   }
+
+  //   setupAudio();
+  // }, [postcard.song]);
+
+  // const playMusic = () => {
+  //   if (audio) {
+  //     audio.play().catch(() => console.log("User must interact first!"));
+  //   }
+  // };
 
   return (
     <main
@@ -62,28 +95,12 @@ export default async function ViewPostcard({ params }) {
         <p style={{ marginTop: "1rem", fontStyle: "italic" }}>
           From: {postcard.receiver}
         </p>
-
-        {/* Music Link Section */}
-        {postcard.song_link && (
-          <div
-            style={{
-              marginTop: "1.5rem",
-              borderTop: "1px solid #eee",
-              paddingTop: "1rem",
-            }}
-          >
-            <p>🎵 Listen to this song while viewing:</p>
-            <a
-              href={postcard.song_link}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: "#0070f3", textDecoration: "underline" }}
-            >
-              Open Song Link
-            </a>
-          </div>
-        )}
       </div>
+
+      {/* <div onClick={playMusic} className="postcard-container">
+        <h1>{postcard.title}</h1>
+        <p>Tap anywhere to hear the music</p>
+      </div> */}
     </main>
   );
 }
