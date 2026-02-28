@@ -7,8 +7,9 @@ export default async function ViewPostcard({ params }) {
   const { slug } = await params;
 
   // 2. Fetch the postcard data from Supabase
+  console.log("Fetching postcard with slug:", slug);
   const { data: postcard, error } = await supabase
-    .from("postcards")
+    .from("posts")
     .select("*")
     .eq("slug", slug)
     .single();
@@ -44,14 +45,14 @@ export default async function ViewPostcard({ params }) {
         <div
           style={{
             position: "relative",
-            width: "100%",
-            height: "300px",
+            width: "300px",
+            height: "500px",
             overflow: "hidden",
             borderRadius: "8px",
           }}
         >
           <Image
-            src={postcard.image_url}
+            src={postcard.image}
             alt="Postcard Image"
             fill
             style={{ objectFit: "cover" }}
@@ -59,11 +60,11 @@ export default async function ViewPostcard({ params }) {
         </div>
 
         <p style={{ marginTop: "1rem", fontStyle: "italic" }}>
-          From: {postcard.sender_name}
+          From: {postcard.receiver}
         </p>
 
         {/* Music Link Section */}
-        {/* {postcard.song_link && (
+        {postcard.song_link && (
           <div
             style={{
               marginTop: "1.5rem",
@@ -81,7 +82,7 @@ export default async function ViewPostcard({ params }) {
               Open Song Link
             </a>
           </div>
-        )} */}
+        )}
       </div>
     </main>
   );
