@@ -1,6 +1,7 @@
 import { supabase } from "@/lib/supabase";
 import { notFound } from "next/navigation";
 import SplineViewer from "../SplineViewer";
+import Footer from "@/app/components/Footer";
 // import { useEffect, useState } from "react";
 // import { getSpotifyToken } from "../actions";
 
@@ -33,6 +34,7 @@ export default async function ViewPostcard({ params }) {
         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
         loading="lazy"
       ></iframe>
+      <Footer />
     </div>
     // <main
     //   style={{

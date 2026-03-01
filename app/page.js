@@ -4,6 +4,7 @@ import SmallEditor from "./smallEditor";
 import TextEditor from "./texteditor";
 import { useRef } from "react";
 import ImageUpload from "./imageUpload";
+import Footer from "@/app/components/Footer";
 
 export default function Home() {
   const titleRef = useRef();
@@ -65,6 +66,11 @@ export default function Home() {
           </button>
         </div>
       </div>
+      <Footer 
+        onUpload={() => console.log("Upload clicked")}
+        onMusic={() => console.log("Music clicked")}
+        onSend={() => console.log("Send clicked")}
+      />
     </main>
   );
 }
