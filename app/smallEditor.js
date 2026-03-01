@@ -8,6 +8,11 @@ const SmallEditor = forwardRef(({ placeholder, storageKey }, ref) => {
   const editor = useEditor({
     extensions: [StarterKit, Placeholder.configure({ placeholder })],
     immediatelyRender: false,
+    editorProps: {
+      attributes: {
+        style: "font-family: 'Courgette', cursive;",
+      },
+    },
     onUpdate: ({ editor }) => {
       localStorage.setItem(storageKey, editor.getHTML());
     },

@@ -12,13 +12,14 @@ const TextEditor = forwardRef(({ entry }, ref) => {
   const bodyEditor = useEditor({
     extensions: [
       StarterKit,
-      Placeholder.configure({ placeholder: "Enter your loving message here." }),
+      Placeholder.configure({ placeholder: "Enter your message here..." }),
     ],
     immediatelyRender: false,
     editorProps: {
       attributes: {
         class:
-          "outline-none text-4xl font-[var(--font-lora)] leading-[1.3] py-10 pr-10 text-[#77777B] h-[300px] w-full",
+          "outline-none text-2xl leading-relaxed p-6 text-[#77777B] h-full w-full overflow-y-auto",
+        style: "font-family: 'Courgette', cursive;",
       },
     },
     onUpdate: ({ editor }) => {
@@ -56,8 +57,8 @@ const TextEditor = forwardRef(({ entry }, ref) => {
   }, [entry, bodyEditor]);
 
   return (
-    <div className="bg-[url('/card_blank.png')] w-[800px] h-[530px] flex flex-col p-5 overflow-hidden">
-      <div className="bg-white flex-1 overflow-hidden min-h-0 p-4">
+    <div className="bg-[url('/card_blank.png')] bg-cover w-[800px] h-[530px] flex flex-col p-5 overflow-hidden">
+      <div className="bg-white flex-1 overflow-hidden min-h-0 p-8">
         <EditorContent editor={bodyEditor} />
       </div>
     </div>

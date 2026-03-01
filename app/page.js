@@ -27,7 +27,7 @@ export default function Home() {
     const title = titleRef.current?.getData();
     const body = bodyRef.current?.getData();
     const receiver = receiverRef.current?.getData();
-    const spotify = spotifyRef.current?.getData();
+    const spotify = spotifyRef.current?.value || "";
     const file = imageRef.current?.getFile();
 
     const formData = new FormData();
@@ -52,7 +52,7 @@ export default function Home() {
     const title = titleRef.current?.getData();
     const body = bodyRef.current?.getData();
     const receiver = receiverRef.current?.getData();
-    const spotify = spotifyRef.current?.getData();
+    const spotify = spotifyRef.current?.value || "";
 
     const formData = gatherForm();
     
