@@ -2,12 +2,12 @@
 import { supabase } from "@/lib/supabase";
 import { redirect } from "next/navigation";
 
-export async function createPostcard(content) {
-  const title = content.title;
-  const receiverName = content.receiver;
-  const cardContent = content.body;
-  const songLink = content.spotifyLink;
-  const imageFile = content.imageFile;
+export async function createPostcard(formData) {
+  const title = formData.get("title");
+  const receiverName = formData.get("receiver");
+  const cardContent = formData.get("body");
+  const songLink = formData.get("spotifyLink");
+  const imageFile = formData.get("imageFile");
 
   // 1. Upload Image to Supabase Storage
   const fileName = `${Date.now()}-${imageFile.name}`;

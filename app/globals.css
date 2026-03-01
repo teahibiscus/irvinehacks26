@@ -42,18 +42,29 @@ html, body {
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: cover;
+  
   color: var(--foreground);
   font-family: var(--font-courgette), sans-serif;
+}
+
+.postcard_container {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  aspect-ratio: 3 / 2;
+  background-image: url("/card_side1.jpg"); /* Ensure path is just /filename */
+  background-size: cover; /* Change to cover if you want it to fill the whole 3/2 area */
+  background-position: center;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  padding: 40px; /* Gives your editors some breathing room from the card edge */
 }
 
 .ProseMirror {
   outline: none;
   font-family: var(--font-courgette), sans-serif;
-  background-color: radial-gradient(
-    circle,
-    rgba(250, 235, 245, 0.5) 20%,
-    rgba(148, 187, 233, 0.65) 99%
-  );
+  
 }
 
 .ProseMirror p.is-editor-empty:first-child::before {

@@ -8,40 +8,6 @@ import { forwardRef, useEffect, useImperativeHandle, useState } from "react";
 const TextEditor = forwardRef(({ entry }, ref) => {
   const [isTyping, setIsTyping] = useState(false);
 
-  // --- Title Editor ---
-  const headerEditor = useEditor({
-    extensions: [
-      StarterKit,
-      Placeholder.configure({ placeholder: "Title your postcard!" }),
-    ],
-    immediatelyRender: false,
-    editorProps: {
-      attributes: {
-        class: "outline-none font-['Nunito'] text-[16px] text-[#77777B] w-full",
-      },
-    },
-    onUpdate: ({ editor }) => {
-      localStorage.setItem("header-tiptap", editor.getHTML());
-    },
-  });
-
-  // --- Sender Name Editor ---
-  const receiverEditor = useEditor({
-    extensions: [
-      StarterKit,
-      Placeholder.configure({ placeholder: "Receiver's Name" }),
-    ],
-    immediatelyRender: false,
-    editorProps: {
-      attributes: {
-        class: "outline-none font-['Nunito'] text-[16px] text-[#77777B] w-full",
-      },
-    },
-    onUpdate: ({ editor }) => {
-      localStorage.setItem("receiver-tiptap", editor.getHTML());
-    },
-  });
-
   // --- Main Body Editor ---
   const bodyEditor = useEditor({
     extensions: [
@@ -68,23 +34,6 @@ const TextEditor = forwardRef(({ entry }, ref) => {
     },
   });
 
-  // --- spotify link Editor ---
-  const spotifyLink = useEditor({
-    extensions: [
-      StarterKit,
-      Placeholder.configure({ placeholder: "Spotify Link (optional)" }),
-    ],
-    immediatelyRender: false,
-    editorProps: {
-      attributes: {
-        class: "outline-none font-['Nunito'] text-[16px] text-[#77777B] w-full",
-      },
-    },
-    onUpdate: ({ editor }) => {
-      localStorage.setItem("spotify-link-tiptap", editor.getHTML());
-    },
-  });
-
   const [selectedImage, setSelectedImage] = useState(null);
 
   const handleFileChange = (e) => {
@@ -97,18 +46,7 @@ const TextEditor = forwardRef(({ entry }, ref) => {
   };
 
   useImperativeHandle(ref, () => ({
-    handleSave: () => {
-      if (headerEditor && bodyEditor && spotifyLink) {
-        return {
-          title: headerEditor.getText(),
-          body: bodyEditor.getText(),
-          spotifyLink: spotifyLink.getText(),
-          receiver: receiverEditor.getText(),
-          imageFile: selectedImage, // Image handling can be added here if needed
-        };
-      }
-      return null;
-    },
+    getData: () => bodyEditor?.getText() || "",
   }));
 
   // Load entry data if it exists
@@ -116,22 +54,10 @@ const TextEditor = forwardRef(({ entry }, ref) => {
     if (entry?.description && bodyEditor && bodyEditor.isEmpty) {
       bodyEditor.commands.setContent(entry.description);
     }
-    if (entry?.title && headerEditor && headerEditor.isEmpty) {
-      headerEditor.commands.setContent(entry.title);
-    }
-    if (entry?.spotifyLink && spotifyLink && spotifyLink.isEmpty) {
-      spotifyLink.commands.setContent(entry.spotifyLink);
-    }
-    if (entry?.receiver && receiverEditor && receiverEditor.isEmpty) {
-      receiverEditor.commands.setContent(entry.receiver);
-    }
-  }, [entry, bodyEditor, headerEditor, spotifyLink, receiverEditor]);
+  }, [entry, bodyEditor]);
 
   return (
     <div className="p-8 border border-gray-100 rounded-lg">
-      <div className="mb-4">
-        <EditorContent editor={headerEditor} />
-      </div>
       <hr className="border-t border-gray-200 my-6" />
       <div
         className={`transition-shadow duration-700 ${
@@ -139,22 +65,6 @@ const TextEditor = forwardRef(({ entry }, ref) => {
         }`}
       >
         <EditorContent editor={bodyEditor} />
-      </div>
-      <EditorContent editor={spotifyLink} />
-      <EditorContent editor={receiverEditor} />
-      <div className="mt-4 p-4 border-2 border-dashed border-gray-200 rounded-xl">
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleFileChange}
-          id="image-upload"
-          className="hidden"
-        />
-        <label htmlFor="image-upload" className="cursor-pointer text-[#77777B]">
-          {selectedImage
-            ? `Selected: ${selectedImage.name}`
-            : "Click to upload an image"}
-        </label>
       </div>
     </div>
   );
