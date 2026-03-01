@@ -8,18 +8,23 @@ import ImageUpload from "./imageUpload";
 import Footer from "@/app/components/Footer";
 
 export default function Home() {
+  const [showMusicInput, setShowMusicInput] = useState(false);
   const titleRef = useRef();
   const bodyRef = useRef();
   const [preview, setPreview] = useState("/vercel.svg");
+  const [imageFile, setImageFile] = useState(null);
   const receiverRef = useRef();
   const spotifyRef = useRef();
   const imageRef = useRef();
+  const handleImageSelect = (file, previewUrl) => {
+    setImageFile(file); // The binary for the database
+    setPreview(previewUrl); // The URL for the <img> tag
+  };
   const onSaveButtonClick = async () => {
     const title = titleRef.current?.getData();
     const body = bodyRef.current?.getData();
     const receiver = receiverRef.current?.getData();
     const spotify = spotifyRef.current?.getData();
-    const file = imageRef.current?.getFile(); // Make sure your image component has this!
 
     // 2. Wrap it in FormData
     const formData = new FormData();
@@ -27,10 +32,16 @@ export default function Home() {
     formData.append("body", body);
     formData.append("receiver", receiver);
     formData.append("spotifyLink", spotify);
-    formData.append("imageFile", file); // This is the magic part for the server
-
+    if (imageFile) {
+      formData.append("imageFile", imageFile);
+    }
     // 3. Send the "envelope" to the action
     await createPostcard(formData);
+  };
+
+  const onMusicClick = () => {
+    // display music input field from smallEditor
+    setShowMusicInput(!showMusicInput);
   };
 
   return (
@@ -72,10 +83,6 @@ export default function Home() {
               <SmallEditor ref={receiverRef} placeholder="Receiver's Name" />
             </div>
           </div>
-          <ImageUpload
-            ref={imageRef}
-            onImageSelect={(url) => setPreview(url)}
-          />
 
           <SmallEditor ref={titleRef} placeholder="Title your postcard!" />
           <TextEditor ref={bodyRef} placeholder="Enter your message here." />
@@ -94,9 +101,9 @@ export default function Home() {
           </div>
         </div>
         <Footer
-          onUpload={() => console.log("Upload clicked")}
-          onMusic={() => console.log("Music clicked")}
-          onSend={() => console.log("Send clicked")}
+          onImageSelect={handleImageSelect}
+          spotifyRef={spotifyRef}
+          onSend={onSaveButtonClick}
         />
       </main>
     </div>
