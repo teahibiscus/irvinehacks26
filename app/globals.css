@@ -40,20 +40,23 @@ html, body {
   rgba(232, 234, 240, 0.3) 100%
 );
   background-attachment: fixed;
-  background-image: url("/card_blank.png");
+  background-image: url("/background.png");
   background-repeat: repeat;
   background-size: cover;
-  
   color: var(--foreground);
   font-family: var(--font-courgette), sans-serif;
 }
 
+
+.scroll-container::-webkit-scrollbar {
+  display: none;
+}
 .postcard_container {
   position: relative;
   width: 800px;
   max-width: 800px;
   aspect-ratio: 3 / 2;
-  background-image: url("/card_side1.jpg");
+  background-image: url("/background.png");
   background-size: cover;
   background-position: center;
   background-repeat: repeat;

@@ -1,64 +1,83 @@
 "use client";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import SmallEditor from "../smallEditor";
-import { useState } from "react";
 
 export default function Footer({ onImageSelect, spotifyRef, onSend }) {
   const fileInputRef = useRef(null);
   const [showMusicInput, setShowMusicInput] = useState(false);
-  // Trigger the hidden file input when the button is clicked
+
   const handleUploadClick = () => {
     fileInputRef.current?.click();
   };
 
   const closeMusicInput = () => {
     setShowMusicInput(false);
-    // save spotify link to local storage so it can be retrieved in page.js
     const spotifyLink = spotifyRef.current?.getData();
+    if (spotifyLink) {
+      localStorage.setItem("spotifyLink", spotifyLink);
+    }
   };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file && onImageSelect) {
-      // Create the temporary URL
       const previewUrl = URL.createObjectURL(file);
-
       onImageSelect(file, previewUrl);
     }
   };
+
   return (
-    <div className="footer-blur with-background">
-      {/* Hidden File Input */}
-      <input
-        type="file"
-        ref={fileInputRef}
-        onChange={handleFileChange}
-        accept="image/*"
-        className="hidden"
-      />
-      <div
-        className={`w-full max-w-[400px] px-8 pb-4 transition-all duration-300 ${
-          showMusicInput ? "block opacity-100" : "hidden opacity-0"
-        }`}
-      >
-        <div className="bg-white/20 backdrop-blur-md border border-white/30 rounded-lg p-2 shadow-xl">
-          <SmallEditor ref={spotifyRef} placeholder="Paste Spotify Link..." />
-        </div>
-        <button
-          onClick={() => setShowMusicInput(false)}
-          className="mt-2 w-full bg-red-500 text-white py-2 rounded-lg hover:bg-red-600 transition-colors"
-        >
-          Close Music Input
-        </button>
-      </div>
-      {/* Content container */}
+    <div className="footer-blur with-background relative">
       <div
         className="content"
-        style={{ justifyContent: "flex-end", padding: "15px 75px" }}
+        style={{
+          display: "flex",
+          justifyContent: "flex-end",
+          alignItems: "center",
+          padding: "15px 75px",
+        }}
       >
+        <input
+          type="file"
+          ref={fileInputRef}
+          onChange={handleFileChange}
+          accept="image/*"
+          className="hidden"
+        />
+
         {/* Button Container */}
-        <div className="relative flex h-[50px]" style={{ gap: "20px" }}>
-          {/* Upload Button - positioned at x=990 in 1290px container */}
+        <div
+          className="relative flex h-[50px] items-center"
+          style={{ gap: "20px" }}
+        >
+          {/* FLOATING MUSIC INPUT */}
+          {/* This is positioned absolutely relative to the Button Container */}
+          <div
+            className={`absolute bottom-[70px] right-[0px] w-[350px] transition-all duration-300 transform ${
+              showMusicInput
+                ? "opacity-100 translate-y-0 scale-100"
+                : "opacity-0 translate-y-4 scale-95 pointer-events-none"
+            }`}
+          >
+            <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl p-2 shadow-2xl flex items-center gap-2">
+              <div className="flex-grow">
+                <SmallEditor
+                  ref={spotifyRef}
+                  placeholder="Paste Spotify Link..."
+                />
+              </div>
+              <button
+                onClick={closeMusicInput}
+                className="bg-[#1DB954] hover:bg-[#1ed760] text-white px-4 py-1.5 rounded-lg font-bold text-xs transition-all active:scale-95 whitespace-nowrap"
+              >
+                Apply
+              </button>
+            </div>
+            {/* Small arrow/caret pointing down to the icon (optional) */}
+            <div className="w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-white/10 mx-auto mt-[-1px] mr-12"></div>
+          </div>
+
+          {/* Upload Button */}
           <button
             onClick={handleUploadClick}
             className="group relative overflow-hidden transition-all"
@@ -73,46 +92,19 @@ export default function Footer({ onImageSelect, spotifyRef, onSend }) {
               boxShadow:
                 "0px 2px 4px 0px rgba(0,0,0,0.25), -1.858px -1.732px 12px -8px rgba(156,205,248,0.15)",
             }}
-            aria-label="Upload"
           >
             <img
               src="https://www.figma.com/api/mcp/asset/c52bdff9-f286-49aa-a868-507d5c7a3ae5"
               alt="Upload"
-              style={{
-                position: "absolute",
-                left: "25px",
-                top: "10px",
-                width: "30px",
-                height: "30px",
-              }}
+              className="absolute left-[25px] top-[10px] w-[30px] h-[30px]"
             />
-            {/* Default state */}
             <div
-              className="absolute inset-[-1px] pointer-events-none rounded-[inherit] transition-shadow duration-200 group-hover:opacity-0 group-active:opacity-0"
-              style={{
-                boxShadow:
-                  "inset 0px -1px 4px 0px #9ccdf8, inset 2.676px 2.494px 11.52px 0px rgba(156,205,248,0), inset 1.747px 1.628px 5.76px 0px rgba(255,255,255,0)",
-              }}
-            />
-            {/* Hover state */}
-            <div
-              className="absolute inset-[-1px] pointer-events-none rounded-[inherit] transition-shadow duration-200 opacity-0 group-hover:opacity-100 group-active:opacity-0"
-              style={{
-                boxShadow:
-                  "inset 0px 5px 5px 5px rgba(255,255,255,0.5), inset 0px -1px 4px 0px #9ccdf8, inset 2.676px 2.494px 11.52px 0px rgba(156,205,248,0), inset 1.747px 1.628px 5.76px 0px rgba(255,255,255,0)",
-              }}
-            />
-            {/* Clicked/Active state */}
-            <div
-              className="absolute inset-[-1px] pointer-events-none rounded-[inherit] transition-shadow duration-200 opacity-0 group-active:opacity-100"
-              style={{
-                boxShadow:
-                  "inset 0px 4px 4px 0px rgba(0,0,0,0.25), inset 0px -1px 4px 0px #9ccdf8, inset 2.676px 2.494px 11.52px 0px rgba(156,205,248,0), inset 1.747px 1.628px 5.76px 0px rgba(255,255,255,0)",
-              }}
+              className="absolute inset-[-1px] pointer-events-none rounded-[inherit] transition-shadow duration-200 group-hover:opacity-0"
+              style={{ boxShadow: "inset 0px -1px 4px 0px #9ccdf8" }}
             />
           </button>
 
-          {/* Music Button - positioned at x=1100 in 1290px container */}
+          {/* Music Button */}
           <button
             onClick={() => setShowMusicInput(!showMusicInput)}
             className="group relative overflow-hidden transition-all"
@@ -120,53 +112,27 @@ export default function Footer({ onImageSelect, spotifyRef, onSend }) {
               width: "80px",
               height: "50px",
               borderRadius: "8px",
-              border: "1px solid rgba(255, 255, 255, 0.1)",
+              border: showMusicInput
+                ? "1px solid #3c5344"
+                : "1px solid rgba(255, 255, 255, 0.1)",
               background:
                 "linear-gradient(90deg, rgba(156, 205, 248, 0.1) 0%, rgba(156, 205, 248, 0.1) 100%), linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.2) 100%)",
               backdropFilter: "blur(17.84px)",
-              boxShadow:
-                "0px 2px 4px 0px rgba(0,0,0,0.25), -1.858px -1.732px 12px -8px rgba(156,205,248,0.15)",
+              boxShadow: "0px 2px 4px 0px rgba(0,0,0,0.25)",
             }}
-            aria-label="Music"
           >
             <img
               src="https://www.figma.com/api/mcp/asset/bbb43766-faf4-4bb0-9bd7-9d3813d5759a"
               alt="Music"
-              style={{
-                position: "absolute",
-                left: "25px",
-                top: "10px",
-                width: "30px",
-                height: "30px",
-              }}
+              className="absolute left-[25px] top-[10px] w-[30px] h-[30px]"
             />
-            {/* Default state */}
             <div
-              className="absolute inset-[-1px] pointer-events-none rounded-[inherit] transition-shadow duration-200 group-hover:opacity-0 group-active:opacity-0"
-              style={{
-                boxShadow:
-                  "inset 0px -1px 4px 0px #9ccdf8, inset 2.676px 2.494px 11.52px 0px rgba(156,205,248,0), inset 1.747px 1.628px 5.76px 0px rgba(255,255,255,0)",
-              }}
-            />
-            {/* Hover state */}
-            <div
-              className="absolute inset-[-1px] pointer-events-none rounded-[inherit] transition-shadow duration-200 opacity-0 group-hover:opacity-100 group-active:opacity-0"
-              style={{
-                boxShadow:
-                  "inset 0px 5px 5px 5px rgba(255,255,255,0.5), inset 0px -1px 4px 0px #9ccdf8, inset 2.676px 2.494px 11.52px 0px rgba(156,205,248,0), inset 1.747px 1.628px 5.76px 0px rgba(255,255,255,0)",
-              }}
-            />
-            {/* Clicked/Active state */}
-            <div
-              className="absolute inset-[-1px] pointer-events-none rounded-[inherit] transition-shadow duration-200 opacity-0 group-active:opacity-100"
-              style={{
-                boxShadow:
-                  "inset 0px 4px 4px 0px rgba(0,0,0,0.25), inset 0px -1px 4px 0px #9ccdf8, inset 2.676px 2.494px 11.52px 0px rgba(156,205,248,0), inset 1.747px 1.628px 5.76px 0px rgba(255,255,255,0)",
-              }}
+              className="absolute inset-[-1px] pointer-events-none rounded-[inherit] transition-shadow duration-200 group-hover:opacity-0"
+              style={{ boxShadow: "inset 0px -1px 4px 0px #9ccdf8" }}
             />
           </button>
 
-          {/* Send Button - positioned at x=1210 in 1290px container */}
+          {/* Send Button */}
           <button
             onClick={onSend}
             className="group relative overflow-hidden transition-all"
@@ -178,45 +144,16 @@ export default function Footer({ onImageSelect, spotifyRef, onSend }) {
               background:
                 "linear-gradient(90deg, rgba(156, 205, 248, 0.1) 0%, rgba(156, 205, 248, 0.1) 100%), linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.2) 100%)",
               backdropFilter: "blur(17.84px)",
-              boxShadow:
-                "0px 2px 4px 0px rgba(0,0,0,0.25), -1.858px -1.732px 12px -8px rgba(156,205,248,0.15)",
             }}
-            aria-label="Send"
           >
             <img
               src="https://www.figma.com/api/mcp/asset/4fcec93e-e1f5-4cd9-841c-accddaf16480"
               alt="Send"
-              style={{
-                position: "absolute",
-                left: "25px",
-                top: "10px",
-                width: "30px",
-                height: "30px",
-              }}
+              className="absolute left-[25px] top-[10px] w-[30px] h-[30px]"
             />
-            {/* Default state */}
             <div
-              className="absolute inset-[-1px] pointer-events-none rounded-[inherit] transition-shadow duration-200 group-hover:opacity-0 group-active:opacity-0"
-              style={{
-                boxShadow:
-                  "inset 0px -1px 4px 0px #9ccdf8, inset 2.676px 2.494px 11.52px 0px rgba(156,205,248,0), inset 1.747px 1.628px 5.76px 0px rgba(255,255,255,0)",
-              }}
-            />
-            {/* Hover state */}
-            <div
-              className="absolute inset-[-1px] pointer-events-none rounded-[inherit] transition-shadow duration-200 opacity-0 group-hover:opacity-100 group-active:opacity-0"
-              style={{
-                boxShadow:
-                  "inset 0px 5px 5px 5px rgba(255,255,255,0.5), inset 0px -1px 4px 0px #9ccdf8, inset 2.676px 2.494px 11.52px 0px rgba(156,205,248,0), inset 1.747px 1.628px 5.76px 0px rgba(255,255,255,0)",
-              }}
-            />
-            {/* Clicked/Active state */}
-            <div
-              className="absolute inset-[-1px] pointer-events-none rounded-[inherit] transition-shadow duration-200 opacity-0 group-active:opacity-100"
-              style={{
-                boxShadow:
-                  "inset 0px 4px 4px 0px rgba(0,0,0,0.25), inset 0px -1px 4px 0px #9ccdf8, inset 2.676px 2.494px 11.52px 0px rgba(156,205,248,0), inset 1.747px 1.628px 5.76px 0px rgba(255,255,255,0)",
-              }}
+              className="absolute inset-[-1px] pointer-events-none rounded-[inherit] transition-shadow duration-200 group-hover:opacity-0"
+              style={{ boxShadow: "inset 0px -1px 4px 0px #9ccdf8" }}
             />
           </button>
         </div>
