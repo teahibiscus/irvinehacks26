@@ -49,16 +49,27 @@ html, body {
 
 .postcard_container {
   position: relative;
-  width: 100%;
+  width: 800px;
   max-width: 800px;
   aspect-ratio: 3 / 2;
-  background-image: url("/card_side1.jpg"); /* Ensure path is just /filename */
-  background-size: cover; /* Change to cover if you want it to fill the whole 3/2 area */
+  background-image: url("/card_side1.jpg");
+  background-size: cover;
   background-position: center;
   border-radius: 4px;
   display: flex;
   flex-direction: column;
-  padding: 40px; /* Gives your editors some breathing room from the card edge */
+  padding: 40px;
+  
+  overflow: hidden; 
+  flex-shrink: 0;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }
 
 .ProseMirror {
@@ -105,10 +116,10 @@ button[data-glow="true"]:hover::after {
 }
 
 /* Typing glow effect for body editor */
-.ProseMirror.typing-glow {
+/* .ProseMirror.typing-glow {
   text-shadow: 0 0 8px rgba(255, 255, 255, 0.8), 0 0 12px rgba(255, 255, 255, 0.6), 0 0 16px rgba(255, 255, 255, 0.4);
   animation: fadeGlow 4s ease-out forwards;
-}
+} */
 /* This targets the specific Tiptap placeholder logic */
 .tiptap p.is-placeholder::before {
   color: #adb5bd;

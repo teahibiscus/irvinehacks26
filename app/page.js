@@ -38,11 +38,19 @@ export default function Home() {
     >
       <div className="p-8">
         <h1>Create a Postcard</h1>
+        <div className="bg-[url('/card_side1.jpg')] w-[800px] h-[530px] mb-4 text-gray-600 flex justify-end items-center">
+          <div className="w-1/2">
+            <img src="/vercel.svg" />
+          </div>
+          <div className="w-1/3 ml-auto">
+            <SmallEditor ref={receiverRef} placeholder="Receiver's Name" />
+          </div>
+        </div>
 
         <SmallEditor ref={titleRef} placeholder="Title your postcard!" />
-        <TextEditor ref={bodyRef} placeholder="Enter your message here." />
-        <SmallEditor ref={receiverRef} placeholder="Receiver's Name" />
         <SmallEditor ref={spotifyRef} placeholder="Spotify Link (optional)" />
+        <TextEditor ref={bodyRef} placeholder="Enter your message here." />
+
         <ImageUpload ref={imageRef} />
 
         <div className="mt-8">
