@@ -34,10 +34,10 @@ export default function Home() {
   return (
     <div style={{ position: 'relative' }}>
       {/* logo header */}
-      <header style={{ position: 'absolute', top: 0, left: 0, padding: '1rem' }}>
+      <header style={{ position: 'absolute', top: 0, left: 0, padding: '1rem', paddingLeft: '4rem' }}>
         <div style={{ width: '120px', height: '50px', position: 'relative' }}>
           <Image
-            src="/placeholder_logo.png"
+            src="/papertrail_logo.png"
             alt="logo"
             fill
             style={{ objectFit: 'contain' }}
