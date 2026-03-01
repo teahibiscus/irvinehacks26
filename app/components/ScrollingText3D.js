@@ -273,17 +273,6 @@ export default function ScrollingText3D({
           </div>
         ))}
       </div>
-
-      {/* Center focus indicator removed - cleaner look with single line */}
-
-      {/* Navigation hint */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-center">
-        <div className="bg-black/30 backdrop-blur-sm px-6 py-3 rounded-full">
-          <p className="text-sm opacity-80">
-            Click, scroll, or press ↓ / Space to continue
-          </p>
-        </div>
-      </div>
     </div>
   );
 }

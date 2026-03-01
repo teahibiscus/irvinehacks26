@@ -48,7 +48,7 @@ export default function Sample3DText() {
         <a
           href="/"
           className="inline-block px-4 py-2 bg-black/30 backdrop-blur-sm text-white rounded-full hover:bg-black/50 transition-colors"
-          style={{ fontFamily: "var(--font-courgette)" }}
+          style={{ fontFamily: "var(--font-lato)" }}
         >
           ← Home
         </a>
