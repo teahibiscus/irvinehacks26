@@ -35,6 +35,31 @@ export default function SplineViewer({ postcard }) {
     }
   };
 
+//   // Update the 'reciever' text object with postcard content
+//     if (splineApp && postcard.receiver) {
+//       console.log('Updating Spline text with postcard receiver:', postcard.receiver);
+//       // try variable first (preferred for Spline designs)
+//       try {
+//         splineApp.setVariable('receiverName', postcard.receiver);
+//       } catch (err) {
+//         console.log('Failed to set variable receiverName:', err);
+//       }
+
+//       // fallback: attempt to find a node by name and update its text
+//       try {
+//         const maybeNode =
+//           (typeof splineApp.findNode === 'function' && splineApp.findNode('receiver')) ||
+//           (typeof splineApp.getObjectByName === 'function' && splineApp.getObjectByName('receiver')); // just in case
+//         if (maybeNode) {
+//           maybeNode.text = postcard.receiver;
+//         }
+//       } catch (error) {
+//         console.log('Could not locate or update text node:', error);
+//       }
+//     }
+//   };
+
+
   return (
     // <div
     //   style={{

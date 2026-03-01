@@ -1,6 +1,7 @@
 "use client";
 import { createPostcard } from "./actions";
 import TextEditor from "./texteditor";
+import Image from "next/image";
 import { useRef } from "react";
 
 export default function Home() {
@@ -15,7 +16,35 @@ export default function Home() {
     createPostcard(content);
   };
   return (
-    <main style={{ padding: "2rem" }}>
+    <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+      {/* Header Bar */}
+      <header
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          padding: ".5rem .5rem",
+          paddingLeft:"0",
+        }}
+      >
+        {/* Logo on the left */}
+        <div style={{ width: "150px", 
+                      height: "50px", 
+                      position: "relative", 
+                      marginLeft: "-20px"
+                     }}
+        >
+          <Image
+            src="/logo.png"
+            alt="logo"
+            fill
+            style={{ objectFit: "contain" }}
+          />
+        </div>
+      </header>
+
+      {/* Content */}
+      <main style={{ padding: "2rem", flex: 1 }}>
       <h1>Create a Postcard</h1>
 
       <TextEditor ref={editorRef} />
@@ -27,6 +56,7 @@ export default function Home() {
           Save From Page.js
         </button>
       </div>
-    </main>
+      </main>
+    </div>
   );
 }
