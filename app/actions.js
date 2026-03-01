@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 export async function createPostcard(formData) {
   const title = formData.get("title");
   const receiverName = formData.get("receiverName");
+  const cardContent = formData.get("cardContent");
   const songLink = formData.get("songLink");
   const imageFile = formData.get("image");
 
@@ -28,6 +29,7 @@ export async function createPostcard(formData) {
       {
         receiver: receiverName,
         title,
+        content: cardContent,
         image: publicUrl,
         song: songLink,
       },

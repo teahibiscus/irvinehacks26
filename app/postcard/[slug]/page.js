@@ -1,6 +1,6 @@
 import { supabase } from "@/lib/supabase";
-import Image from "next/image";
 import { notFound } from "next/navigation";
+import SplineViewer from "../SplineViewer";
 // import { useEffect, useState } from "react";
 // import { getSpotifyToken } from "../actions";
 
@@ -53,54 +53,40 @@ export default async function ViewPostcard({ params }) {
   // };
 
   return (
-    <main
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        padding: "2rem",
-      }}
-    >
-      <div
-        style={{
-          border: "1px solid #ccc",
-          padding: "1rem",
-          borderRadius: "12px",
-          maxWidth: "500px",
-          boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
-        }}
-      >
-        <h1 style={{ fontSize: "1.5rem", marginBottom: "1rem" }}>
-          {postcard.title}
-        </h1>
+    <SplineViewer postcard={postcard} />
+    // <main
+    //   style={{
+    //     display: "flex",
+    //     flexDirection: "column",
+    //     alignItems: "center",
+    //     padding: "2rem",
+    //   }}
+    // >
+    //   <div
+    //     style={{
+    //       border: "1px solid #ccc",
+    //       padding: "1rem",
+    //       borderRadius: "12px",
+    //       maxWidth: "500px",
+    //       boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
+    //     }}
+    //   >
+    //     <h1 style={{ fontSize: "1.5rem", marginBottom: "1rem" }}>
+    //       {postcard.title}
+    //     </h1>
 
-        {/* Postcard Image */}
-        <div
-          style={{
-            position: "relative",
-            width: "300px",
-            height: "500px",
-            overflow: "hidden",
-            borderRadius: "8px",
-          }}
-        >
-          <Image
-            src={postcard.image}
-            alt="Postcard Image"
-            fill
-            style={{ objectFit: "cover" }}
-          />
-        </div>
+    //     {/* Spline 3D Postcard */}
+    //     <SplineViewer postcard={postcard} />
 
-        <p style={{ marginTop: "1rem", fontStyle: "italic" }}>
-          From: {postcard.receiver}
-        </p>
-      </div>
+    //     <p style={{ marginTop: "1rem", fontStyle: "italic" }}>
+    //       From: {postcard.receiver}
+    //     </p>
+    //   </div>
 
-      {/* <div onClick={playMusic} className="postcard-container">
-        <h1>{postcard.title}</h1>
-        <p>Tap anywhere to hear the music</p>
-      </div> */}
-    </main>
+    //   {/* <div onClick={playMusic} className="postcard-container">
+    //     <h1>{postcard.title}</h1>
+    //     <p>Tap anywhere to hear the music</p>
+    //   </div> */}
+    // </main>
   );
 }
