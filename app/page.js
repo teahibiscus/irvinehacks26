@@ -36,8 +36,8 @@ export default function Home() {
     formData.append("receiver", receiver);
     formData.append("spotifyLink", spotify);
     if (imageFile) {
-          formData.append("imageFile", imageFile);
-        }    
+      formData.append("imageFile", imageFile);
+    }
     return formData;
   };
 
@@ -55,7 +55,7 @@ export default function Home() {
     const spotify = spotifyRef.current?.value || "";
 
     const formData = gatherForm();
-    
+
     const slug = await createPostcard(formData);
     if (slug) {
       router.push(`/sent/${slug}`);
@@ -96,13 +96,13 @@ export default function Home() {
         style={{ padding: "2rem" }}
       >
         <div className="p-10">
-          <div className="bg-[url('/card_blank.png')] bg-cover w-[800px] h-[530px] mb-4 text-gray-600 flex items-center p-10">
+          <div className="bg-[url('/card_front.jpg')] bg-cover w-[800px] h-[530px] mb-4 text-gray-600 flex items-center p-10">
             {/* Left Half: The Image Area */}
-            <div className="bg-white w-1/2 h-full flex items-center justify-center p-8">
+            <div className="w-1/2 h-full flex items-center justify-center p-8">
               <img
                 src={preview}
                 alt="Preview"
-                className="max-w-full max-h-full object-contain"
+                className="bg-white p-8 max-w-full max-h-full object-contain"
               />
             </div>
 
@@ -110,12 +110,6 @@ export default function Home() {
             <div className="w-1/2 h-full flex flex-col items-center justify-center pr-12 relative">
               {/* The "Hello to" image shifted slightly left and placed above the input */}
               <div className="w-full max-w-[250px] flex flex-col items-start">
-                <img
-                  src="/Hello_to.png"
-                  alt="Hello to: "
-                  className=" object-contain -mt-50 -ml-12" // -ml-12 pulls it to the left
-                  style={{ transform: "rotate(-5deg)" }} // Optional: a tiny tilt makes it look more "hand-placed"
-                />
                 <div className="p-10">
                   <SmallEditor
                     ref={receiverRef}

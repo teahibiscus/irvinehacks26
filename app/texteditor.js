@@ -57,7 +57,7 @@ const TextEditor = forwardRef(({ entry }, ref) => {
   }, [entry, bodyEditor]);
 
   return (
-    <div className="bg-[url('/card_blank.png')] bg-cover w-[800px] h-[530px] flex flex-col p-5 overflow-hidden">
+    <div className="bg-[url('/card_back.png')] bg-cover w-[800px] h-[530px] flex flex-col p-5 overflow-hidden">
       <div className="bg-white flex-1 overflow-hidden min-h-0 p-8">
         <EditorContent editor={bodyEditor} />
       </div>

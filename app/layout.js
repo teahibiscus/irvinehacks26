@@ -28,7 +28,7 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "Papertrail - send a feeling, not just a message",
-  description: "All with love, from your heart to theirs.",
+  description: "all with love, from your heart to theirs.",
 };
 
 export default function RootLayout({ children }) {
