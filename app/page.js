@@ -48,9 +48,6 @@ export default function Home() {
   //   }
   // };
 
-  // send button should behave identical to save for now
-  const onSendButtonClick = onSaveButtonClick;
-
   const onSaveButtonClick = async () => {
     const title = titleRef.current?.getData();
     const body = bodyRef.current?.getData();
@@ -64,6 +61,9 @@ export default function Home() {
       router.push(`/sent/${slug}`);
     }
   };
+
+  // send button should behave identical to save for now
+  const onSendButtonClick = onSaveButtonClick;
 
   const onMusicClick = () => {
     // display music input field from smallEditor
