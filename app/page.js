@@ -2,6 +2,7 @@
 import { createPostcard } from "./actions";
 import SmallEditor from "./smallEditor";
 import TextEditor from "./texteditor";
+import Image from "next/image";
 import { useRef } from "react";
 import ImageUpload from "./imageUpload";
 import Footer from "@/app/components/Footer";
@@ -32,25 +33,29 @@ export default function Home() {
   };
 
   return (
+    <div style={{ position: 'relative' }}>
+      {/* logo header */}
+      <header style={{ position: 'absolute', top: 0, left: 0, padding: '1rem', paddingLeft: '4rem' }}>
+        <div style={{ width: '120px', height: '50px', position: 'relative' }}>
+          <Image
+            src="/papertrail_logo.png"
+            alt="logo"
+            fill
+            style={{ objectFit: 'contain' }}
+          />
+        </div>
+      </header>
     <main
       className="flex items-center justify-center min-h-screen p-4"
       style={{ padding: "2rem" }}
     >
       <div className="p-8">
         <h1>Create a Postcard</h1>
-        <div className="bg-[url('/card_side1.jpg')] w-[800px] h-[530px] mb-4 text-gray-600 flex justify-end items-center">
-          <div className="w-1/2">
-            <img src="/vercel.svg" />
-          </div>
-          <div className="w-1/3 ml-auto">
-            <SmallEditor ref={receiverRef} placeholder="Receiver's Name" />
-          </div>
-        </div>
 
         <SmallEditor ref={titleRef} placeholder="Title your postcard!" />
-        <SmallEditor ref={spotifyRef} placeholder="Spotify Link (optional)" />
         <TextEditor ref={bodyRef} placeholder="Enter your message here." />
-
+        <SmallEditor ref={receiverRef} placeholder="Receiver's Name" />
+        <SmallEditor ref={spotifyRef} placeholder="Spotify Link (optional)" />
         <ImageUpload ref={imageRef} />
 
         <div className="mt-8">
@@ -66,11 +71,16 @@ export default function Home() {
           </button>
         </div>
       </div>
+<<<<<<< HEAD
       <Footer 
         onUpload={() => console.log("Upload clicked")}
         onMusic={() => console.log("Music clicked")}
         onSend={() => console.log("Send clicked")}
       />
     </main>
+=======
+      </main>
+    </div>
+>>>>>>> d6ea290baab684a8d578700af2c9d855707638ba
   );
 }
