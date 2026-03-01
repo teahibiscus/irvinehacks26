@@ -11,7 +11,7 @@ export default function Footer({ onUpload, onMusic, onSend }) {
         {/* Upload Button - positioned at x=990 in 1290px container */}
         <button
           onClick={onUpload}
-          className="group relative overflow-hidden transition-all hover:scale-105"
+          className="group relative overflow-hidden transition-all"
           style={{
             width: "80px",
             height: "50px",
@@ -24,7 +24,7 @@ export default function Footer({ onUpload, onMusic, onSend }) {
           aria-label="Upload"
         >
           <img
-            src="https://www.figma.com/api/mcp/asset/7934e0be-851e-403a-97e9-817bd17a150f"
+            src="https://www.figma.com/api/mcp/asset/c52bdff9-f286-49aa-a868-507d5c7a3ae5"
             alt="Upload"
             style={{
               position: "absolute",
@@ -34,10 +34,25 @@ export default function Footer({ onUpload, onMusic, onSend }) {
               height: "30px"
             }}
           />
+          {/* Default state */}
           <div 
-            className="absolute inset-[-1px] pointer-events-none rounded-[inherit]"
+            className="absolute inset-[-1px] pointer-events-none rounded-[inherit] transition-shadow duration-200 group-hover:opacity-0 group-active:opacity-0"
             style={{
               boxShadow: "inset 0px -1px 4px 0px #9ccdf8, inset 2.676px 2.494px 11.52px 0px rgba(156,205,248,0), inset 1.747px 1.628px 5.76px 0px rgba(255,255,255,0)"
+            }}
+          />
+          {/* Hover state */}
+          <div 
+            className="absolute inset-[-1px] pointer-events-none rounded-[inherit] transition-shadow duration-200 opacity-0 group-hover:opacity-100 group-active:opacity-0"
+            style={{
+              boxShadow: "inset 0px 5px 5px 5px rgba(255,255,255,0.5), inset 0px -1px 4px 0px #9ccdf8, inset 2.676px 2.494px 11.52px 0px rgba(156,205,248,0), inset 1.747px 1.628px 5.76px 0px rgba(255,255,255,0)"
+            }}
+          />
+          {/* Clicked/Active state */}
+          <div 
+            className="absolute inset-[-1px] pointer-events-none rounded-[inherit] transition-shadow duration-200 opacity-0 group-active:opacity-100"
+            style={{
+              boxShadow: "inset 0px 4px 4px 0px rgba(0,0,0,0.25), inset 0px -1px 4px 0px #9ccdf8, inset 2.676px 2.494px 11.52px 0px rgba(156,205,248,0), inset 1.747px 1.628px 5.76px 0px rgba(255,255,255,0)"
             }}
           />
         </button>
@@ -93,10 +108,10 @@ export default function Footer({ onUpload, onMusic, onSend }) {
         </button>
 
         
-        {/* Music Button - positioned at x=1100 in 1290px container */}
+        {/* Send Button - positioned at x=1210 in 1290px container */}
         <button
           onClick={onSend}
-          className="group relative overflow-hidden transition-all hover:scale-105"
+          className="group relative overflow-hidden transition-all"
           style={{
             width: "80px",
             height: "50px",
@@ -109,7 +124,7 @@ export default function Footer({ onUpload, onMusic, onSend }) {
           aria-label="Send"
         >
           <img
-            src="https://www.figma.com/api/mcp/asset/e1721e52-dbfe-491c-b569-305e1f35277a"
+            src="https://www.figma.com/api/mcp/asset/4fcec93e-e1f5-4cd9-841c-accddaf16480"
             alt="Send"
             style={{
               position: "absolute",
@@ -119,10 +134,25 @@ export default function Footer({ onUpload, onMusic, onSend }) {
               height: "30px"
             }}
           />
+          {/* Default state */}
           <div 
-            className="absolute inset-[-1px] pointer-events-none rounded-[inherit]"
+            className="absolute inset-[-1px] pointer-events-none rounded-[inherit] transition-shadow duration-200 group-hover:opacity-0 group-active:opacity-0"
             style={{
               boxShadow: "inset 0px -1px 4px 0px #9ccdf8, inset 2.676px 2.494px 11.52px 0px rgba(156,205,248,0), inset 1.747px 1.628px 5.76px 0px rgba(255,255,255,0)"
+            }}
+          />
+          {/* Hover state */}
+          <div 
+            className="absolute inset-[-1px] pointer-events-none rounded-[inherit] transition-shadow duration-200 opacity-0 group-hover:opacity-100 group-active:opacity-0"
+            style={{
+              boxShadow: "inset 0px 5px 5px 5px rgba(255,255,255,0.5), inset 0px -1px 4px 0px #9ccdf8, inset 2.676px 2.494px 11.52px 0px rgba(156,205,248,0), inset 1.747px 1.628px 5.76px 0px rgba(255,255,255,0)"
+            }}
+          />
+          {/* Clicked/Active state */}
+          <div 
+            className="absolute inset-[-1px] pointer-events-none rounded-[inherit] transition-shadow duration-200 opacity-0 group-active:opacity-100"
+            style={{
+              boxShadow: "inset 0px 4px 4px 0px rgba(0,0,0,0.25), inset 0px -1px 4px 0px #9ccdf8, inset 2.676px 2.494px 11.52px 0px rgba(156,205,248,0), inset 1.747px 1.628px 5.76px 0px rgba(255,255,255,0)"
             }}
           />
         </button>
