@@ -6,7 +6,7 @@ import {
   useState,
 } from "react";
 
-const ImageUpload = forwardRef(({ onFileChange }, ref) => {
+const ImageUpload = forwardRef(({ onImageSelect }, ref) => {
   const [selectedImage, setSelectedImage] = useState(null);
 
   const handleFileChange = (e) => {
@@ -14,7 +14,9 @@ const ImageUpload = forwardRef(({ onFileChange }, ref) => {
     if (file) {
       setSelectedImage(file);
       // Optional: Create a preview URL if you want to show it in the UI
-      // const preview = URL.createObjectURL(file);
+      const preview = URL.createObjectURL(file);
+
+      onImageSelect(preview);
     }
   };
   useImperativeHandle(ref, () => ({
@@ -30,14 +32,12 @@ const ImageUpload = forwardRef(({ onFileChange }, ref) => {
         id="image-upload"
         className="hidden"
       />
-      <img src="/file.svg" alt="Upload Icon" className="w-6 h-6 mb-2" />
       <label htmlFor="image-upload" className="cursor-pointer text-[#77777B]">
-        {/* {selectedImage
-          ? `Selected: ${selectedImage.name}`
-          : "Click to upload an image"} */}
+        <img src="/file.svg" alt="Upload Icon" className="w-6 h-6 mb-2" />
       </label>
     </div>
   );
 });
 
+ImageUpload.displayName = "ImageUpload";
 export default ImageUpload;

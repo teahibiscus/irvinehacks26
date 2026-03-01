@@ -2,12 +2,13 @@
 import { createPostcard } from "./actions";
 import SmallEditor from "./smallEditor";
 import TextEditor from "./texteditor";
-import { useRef } from "react";
+import { useState, useRef } from "react";
 import ImageUpload from "./imageUpload";
 
 export default function Home() {
   const titleRef = useRef();
   const bodyRef = useRef();
+  const [preview, setPreview] = useState("/vercel.svg");
   const receiverRef = useRef();
   const spotifyRef = useRef();
   const imageRef = useRef();
@@ -39,18 +40,21 @@ export default function Home() {
         <h1>Create a Postcard</h1>
         <div className="bg-[url('/card_side1.jpg')] w-[800px] h-[530px] mb-4 text-gray-600 flex justify-end items-center">
           <div className="w-1/2">
-            <img src="/vercel.svg" />
+            <img
+              src={preview}
+              alt="Preview"
+              className="max-h-full object-contain"
+            />
           </div>
           <div className="w-1/3 ml-auto">
             <SmallEditor ref={receiverRef} placeholder="Receiver's Name" />
           </div>
         </div>
+        <ImageUpload ref={imageRef} onImageSelect={(url) => setPreview(url)} />
 
         <SmallEditor ref={titleRef} placeholder="Title your postcard!" />
         <SmallEditor ref={spotifyRef} placeholder="Spotify Link (optional)" />
         <TextEditor ref={bodyRef} placeholder="Enter your message here." />
-
-        <ImageUpload ref={imageRef} />
 
         <div className="mt-8">
           <button
