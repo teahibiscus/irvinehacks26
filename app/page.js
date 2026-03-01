@@ -6,32 +6,43 @@ import { useState, useRef } from "react";
 import Image from "next/image";
 import ImageUpload from "./imageUpload";
 import Footer from "@/app/components/Footer";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
+
   const titleRef = useRef();
   const bodyRef = useRef();
   const [preview, setPreview] = useState("/vercel.svg");
   const receiverRef = useRef();
   const spotifyRef = useRef();
   const imageRef = useRef();
-  const onSaveButtonClick = async () => {
+
+  const gatherForm = () => {
     const title = titleRef.current?.getData();
     const body = bodyRef.current?.getData();
     const receiver = receiverRef.current?.getData();
     const spotify = spotifyRef.current?.getData();
-    const file = imageRef.current?.getFile(); // Make sure your image component has this!
+    const file = imageRef.current?.getFile();
 
-    // 2. Wrap it in FormData
     const formData = new FormData();
     formData.append("title", title);
     formData.append("body", body);
     formData.append("receiver", receiver);
     formData.append("spotifyLink", spotify);
-    formData.append("imageFile", file); // This is the magic part for the server
-
-    // 3. Send the "envelope" to the action
-    await createPostcard(formData);
+    formData.append("imageFile", file);
+    return formData;
   };
+
+  const onSaveButtonClick = async () => {
+    const slug = await createPostcard(gatherForm());
+    if (slug) {
+      router.push(`/sent/${slug}`);
+    }
+  };
+
+  // send button should behave identical to save for now
+  const onSendButtonClick = onSaveButtonClick;
 
   return (
     <div style={{ position: "relative" }}>
@@ -96,7 +107,7 @@ export default function Home() {
         <Footer
           onUpload={() => console.log("Upload clicked")}
           onMusic={() => console.log("Music clicked")}
-          onSend={() => console.log("Send clicked")}
+          onSend={onSendButtonClick}
         />
       </main>
     </div>
