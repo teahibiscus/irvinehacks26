@@ -6,8 +6,10 @@ import { useState, useRef } from "react";
 import Image from "next/image";
 import ImageUpload from "./imageUpload";
 import Footer from "@/app/components/Footer";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
   const [showMusicInput, setShowMusicInput] = useState(false);
   const titleRef = useRef();
   const bodyRef = useRef();
@@ -20,24 +22,48 @@ export default function Home() {
     setImageFile(file); // The binary for the database
     setPreview(previewUrl); // The URL for the <img> tag
   };
-  const onSaveButtonClick = async () => {
+
+  const gatherForm = () => {
     const title = titleRef.current?.getData();
     const body = bodyRef.current?.getData();
     const receiver = receiverRef.current?.getData();
     const spotify = spotifyRef.current?.getData();
+    const file = imageRef.current?.getFile();
 
-    // 2. Wrap it in FormData
     const formData = new FormData();
     formData.append("title", title);
     formData.append("body", body);
     formData.append("receiver", receiver);
     formData.append("spotifyLink", spotify);
     if (imageFile) {
-      formData.append("imageFile", imageFile);
-    }
-    // 3. Send the "envelope" to the action
-    await createPostcard(formData);
+          formData.append("imageFile", imageFile);
+        }    
+    return formData;
   };
+
+  // const onSaveButtonClick = async () => {
+  //   const slug = await createPostcard(gatherForm());
+  //   if (slug) {
+  //     router.push(`/sent/${slug}`);
+  //   }
+  // };
+
+  const onSaveButtonClick = async () => {
+    const title = titleRef.current?.getData();
+    const body = bodyRef.current?.getData();
+    const receiver = receiverRef.current?.getData();
+    const spotify = spotifyRef.current?.getData();
+
+    const formData = gatherForm();
+    
+    const slug = await createPostcard(formData);
+    if (slug) {
+      router.push(`/sent/${slug}`);
+    }
+  };
+
+  // send button should behave identical to save for now
+  const onSendButtonClick = onSaveButtonClick;
 
   const onMusicClick = () => {
     // display music input field from smallEditor
@@ -104,7 +130,7 @@ export default function Home() {
         <Footer
           onImageSelect={handleImageSelect}
           spotifyRef={spotifyRef}
-          onSend={onSaveButtonClick}
+          onSend={onSendButtonClick}
         />
       </main>
     </div>

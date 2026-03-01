@@ -34,9 +34,9 @@ export async function createPostcard(formData) {
     trackId = songLink.trim();
   }
 
-  if (!trackId || trackId.length < 15) {
-    throw new Error(`Invalid Track ID extracted: ${trackId}`);
-  }
+  // if (!trackId || trackId.length < 15) {
+  //   throw new Error(`Invalid Track ID extracted: ${trackId}`);
+  // }
 
   // 3. Save Postcard info to Database
   const { data, error } = await supabase
@@ -58,8 +58,9 @@ export async function createPostcard(formData) {
     throw new Error("Failed to create postcard");
   }
 
-  // 4. Redirect to the newly created postcard page
-  redirect(`/postcard/${data.slug}`);
+  // 4. Instead of redirecting from the server, return the slug so client
+  //    code can decide what to do next (navigate to a share page, preview, etc).
+  return data.slug;
 }
 
 export async function getSpotifyToken() {
