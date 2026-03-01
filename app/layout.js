@@ -1,5 +1,20 @@
 import { Geist, Geist_Mono } from "next/font/google";
+import { Courgette } from "next/font/google";
+import { Lato } from "next/font/google";
+
 import "./globals.css";
+
+const lato = Lato({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-lato",
+});
+
+const courgette = Courgette({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-courgette",
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
