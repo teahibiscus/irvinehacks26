@@ -2,20 +2,11 @@
 
 export default function Footer({ onUpload, onMusic, onSend }) {
   return (
-    <div className="fixed bottom-0 left-0 right-0 flex items-center justify-end z-50" style={{ height: "96px", paddingLeft: "75px", paddingRight: "75px", paddingTop: "15px", paddingBottom: "15px" }}>
-      {/* Background Image with Blur */}
-      <div 
-        className="absolute inset-0 backdrop-blur-[2.5px] pointer-events-none rounded-[3px]"
-        style={{
-          backgroundImage: "url('https://www.figma.com/api/mcp/asset/89024711-cf5a-42e9-9880-3a71380d4146')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundColor: "rgba(255, 255, 255, 0.8)"
-        }}
-      />
-      
-      {/* Button Container */}
-      <div className="relative flex h-[50px]" style={{ gap: "20px" }}>
+    <div className="footer-blur with-background">
+      {/* Content container */}
+      <div className="content" style={{ justifyContent: "flex-end", padding: "15px 75px" }}>
+        {/* Button Container */}
+        <div className="relative flex h-[50px]" style={{ gap: "20px" }}>
         
         {/* Upload Button - positioned at x=990 in 1290px container */}
         <button
@@ -135,6 +126,7 @@ export default function Footer({ onUpload, onMusic, onSend }) {
             }}
           />
         </button>
+      </div>
       </div>
     </div>
   );

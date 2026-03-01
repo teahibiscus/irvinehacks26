@@ -148,3 +148,65 @@ button[data-glow="true"]:hover::after {
   }
 }
 
+/* Glassmorphism Blur Effect for Footer */
+.footer-blur {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 100;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+/* Background blur layer */
+.footer-blur::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    /* Gradient mask for smooth fade at top */
+    -webkit-mask-image: linear-gradient(transparent, black 1rem);
+    mask-image: linear-gradient(transparent, black 1rem);
+    z-index: -1;
+}
+
+/* Optional: Add semi-transparent background */
+.footer-blur.with-background::before {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.footer-blur.with-background.dark::before {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+/* Content container inside footer */
+.footer-blur .content {
+    position: relative;
+    width: 100%;
+    max-width: 1728px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .footer-blur .content {
+        flex-direction: column;
+        gap: 1rem;
+    }
+}
+
+/* Safe area insets for mobile devices */
+.footer-blur {
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+}
+
