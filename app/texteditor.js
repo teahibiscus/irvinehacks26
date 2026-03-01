@@ -56,9 +56,8 @@ const TextEditor = forwardRef(({ entry }, ref) => {
   }, [entry, bodyEditor]);
 
   return (
-    <div className="w-[600px] h-[400px] flex flex-col p-8 border border-gray-100 rounded-lg bg-white overflow-hidden">
-      <hr className="border-t border-gray-200 my-6" />
-      <div className="flex-1 overflow-hidden min-h-0">
+    <div className="bg-red w-[800px] h-[530px] flex flex-col p-8 border border-black-100 rounded-lg overflow-hidden">
+      <div className="bg-white flex-1 overflow-hidden min-h-0 p-4">
         <EditorContent editor={bodyEditor} />
       </div>
     </div>

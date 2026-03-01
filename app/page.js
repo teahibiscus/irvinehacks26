@@ -10,13 +10,18 @@ import { useRouter } from "next/navigation";
 
 export default function Home() {
   const router = useRouter();
-
+  const [showMusicInput, setShowMusicInput] = useState(false);
   const titleRef = useRef();
   const bodyRef = useRef();
   const [preview, setPreview] = useState("/vercel.svg");
+  const [imageFile, setImageFile] = useState(null);
   const receiverRef = useRef();
   const spotifyRef = useRef();
   const imageRef = useRef();
+  const handleImageSelect = (file, previewUrl) => {
+    setImageFile(file); // The binary for the database
+    setPreview(previewUrl); // The URL for the <img> tag
+  };
 
   const gatherForm = () => {
     const title = titleRef.current?.getData();
@@ -30,19 +35,40 @@ export default function Home() {
     formData.append("body", body);
     formData.append("receiver", receiver);
     formData.append("spotifyLink", spotify);
-    formData.append("imageFile", file);
+    if (imageFile) {
+          formData.append("imageFile", imageFile);
+        }    
     return formData;
   };
 
+  // const onSaveButtonClick = async () => {
+  //   const slug = await createPostcard(gatherForm());
+  //   if (slug) {
+  //     router.push(`/sent/${slug}`);
+  //   }
+  // };
+
+  // send button should behave identical to save for now
+  const onSendButtonClick = onSaveButtonClick;
+
   const onSaveButtonClick = async () => {
-    const slug = await createPostcard(gatherForm());
+    const title = titleRef.current?.getData();
+    const body = bodyRef.current?.getData();
+    const receiver = receiverRef.current?.getData();
+    const spotify = spotifyRef.current?.getData();
+
+    const formData = gatherForm();
+    
+    const slug = await createPostcard(formData);
     if (slug) {
       router.push(`/sent/${slug}`);
     }
   };
 
-  // send button should behave identical to save for now
-  const onSendButtonClick = onSaveButtonClick;
+  const onMusicClick = () => {
+    // display music input field from smallEditor
+    setShowMusicInput(!showMusicInput);
+  };
 
   return (
     <div style={{ position: "relative" }}>
@@ -71,42 +97,23 @@ export default function Home() {
       >
         <div className="p-8">
           <h1>Create a Postcard</h1>
-          <div className="bg-[url('/card_side1.jpg')] w-[800px] h-[530px] mb-4 text-gray-600 flex justify-end items-center">
-            <div className="w-1/2">
+          <div className="bg-[url('/card_front.jpg')] w-[800px] h-[530px] mb-4 text-gray-600 flex justify-end items-center">
+            <div className="w-1/2 h-full flex items-center justify-center p-4">
               <img
                 src={preview}
                 alt="Preview"
-                className="max-h-full object-contain"
+                className="max-w-full max-h-full object-contain"
               />
             </div>
             <div className="w-1/3 ml-auto">
               <SmallEditor ref={receiverRef} placeholder="Receiver's Name" />
             </div>
           </div>
-          <ImageUpload
-            ref={imageRef}
-            onImageSelect={(url) => setPreview(url)}
-          />
-
-          <SmallEditor ref={titleRef} placeholder="Title your postcard!" />
           <TextEditor ref={bodyRef} placeholder="Enter your message here." />
-
-          <div className="mt-8">
-            <button
-              onClick={onSaveButtonClick}
-              className="bg-blue-500 text-white px-4 py-2 rounded"
-            >
-              <img
-                src="/window.svg"
-                alt="Save Icon"
-                className="inline-block w-5 h-5 mr-2"
-              />
-            </button>
-          </div>
         </div>
         <Footer
-          onUpload={() => console.log("Upload clicked")}
-          onMusic={() => console.log("Music clicked")}
+          onImageSelect={handleImageSelect}
+          spotifyRef={spotifyRef}
           onSend={onSendButtonClick}
         />
       </main>
