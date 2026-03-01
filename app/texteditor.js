@@ -17,9 +17,8 @@ const TextEditor = forwardRef(({ entry }, ref) => {
     immediatelyRender: false,
     editorProps: {
       attributes: {
-        // Added 'min-h-[300px]' and 'w-full' to ensure it's clickable and visible
         class:
-          "outline-none text-4xl font-[var(--font-lora)] leading-[1.3] py-10 pr-10 text-[#77777B] min-h-[300px] w-full",
+          "outline-none text-4xl font-[var(--font-lora)] leading-[1.3] py-10 pr-10 text-[#77777B] h-[300px] w-full",
       },
     },
     onUpdate: ({ editor }) => {
@@ -57,13 +56,9 @@ const TextEditor = forwardRef(({ entry }, ref) => {
   }, [entry, bodyEditor]);
 
   return (
-    <div className="p-8 border border-gray-100 rounded-lg">
+    <div className="w-[600px] h-[400px] flex flex-col p-8 border border-gray-100 rounded-lg bg-white overflow-hidden">
       <hr className="border-t border-gray-200 my-6" />
-      <div
-        className={`transition-shadow duration-700 ${
-          isTyping ? "shadow-lg" : ""
-        }`}
-      >
+      <div className="flex-1 overflow-hidden min-h-0">
         <EditorContent editor={bodyEditor} />
       </div>
     </div>
